@@ -27,7 +27,7 @@ To set up this project, you will need Java and Maven:
    ```
 2. Navigate to the project directory:
    ```bash
-   cd AWS-IAM-Role-Policy-Validator-main/
+   cd AWS-IAM-Role-Policy-Validator/
    ```
 3. Install the necessary Maven dependencies:
    ```bash
