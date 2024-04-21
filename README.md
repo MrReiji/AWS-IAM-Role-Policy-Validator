@@ -93,6 +93,10 @@ Below is the JSON schema used by this application to validate AWS IAM Role polic
             "type": "object",
             "required": ["Effect", "Action", "Resource"],
             "properties": {
+              "Sid": {
+                "type": "string",
+                "pattern": "^[a-zA-Z0-9]+$"
+              },
               "Effect": {
                 "type": "string",
                 "enum": ["Allow", "Deny"]
@@ -130,14 +134,110 @@ Below is the JSON schema used by this application to validate AWS IAM Role polic
                     }
                   }
                 ]
+              },
+              "Condition": {
+                "type": "object",
+                "properties": {
+                  "StringEquals": {"$ref": "#/definitions/condition-value"},
+                  "StringNotEquals": {"$ref": "#/definitions/condition-value"},
+                  "StringEqualsIgnoreCase": {"$ref": "#/definitions/condition-value"},
+                  "StringNotEqualsIgnoreCase": {"$ref": "#/definitions/condition-value"},
+                  "StringLike": {"$ref": "#/definitions/condition-value"},
+                  "StringNotLike": {"$ref": "#/definitions/condition-value"},
+                  "NumericEquals": {"$ref": "#/definitions/condition-value"},
+                  "NumericNotEquals": {"$ref": "#/definitions/condition-value"},
+                  "NumericLessThan": {"$ref": "#/definitions/condition-value"},
+                  "NumericLessThanEquals": {"$ref": "#/definitions/condition-value"},
+                  "NumericGreaterThan": {"$ref": "#/definitions/condition-value"},
+                  "NumericGreaterThanEquals": {"$ref": "#/definitions/condition-value"},
+                  "DateEquals": {"$ref": "#/definitions/condition-value"},
+                  "DateNotEquals": {"$ref": "#/definitions/condition-value"},
+                  "DateLessThan": {"$ref": "#/definitions/condition-value"},
+                  "DateLessThanEquals": {"$ref": "#/definitions/condition-value"},
+                  "DateGreaterThan": {"$ref": "#/definitions/condition-value"},
+                  "DateGreaterThanEquals": {"$ref": "#/definitions/condition-value"},
+                  "Bool": {"$ref": "#/definitions/condition-value"},
+                  "IpAddress": {"$ref": "#/definitions/condition-value"},
+                  "NotIpAddress": {"$ref": "#/definitions/condition-value"},
+                  "ArnEquals": {"$ref": "#/definitions/condition-value"},
+                  "ArnNotEquals": {"$ref": "#/definitions/condition-value"},
+                  "ArnLike": {"$ref": "#/definitions/condition-value"},
+                  "ArnNotLike": {"$ref": "#/definitions/condition-value"},
+                  "ForAllValues:StringEquals": {"$ref": "#/definitions/condition-set-value"},
+                  "ForAllValues:StringNotEquals": {"$ref": "#/definitions/condition-set-value"},
+                  "ForAllValues:StringLike": {"$ref": "#/definitions/condition-set-value"},
+                  "ForAllValues:StringNotLike": {"$ref": "#/definitions/condition-set-value"},
+                  "ForAllValues:NumericEquals": {"$ref": "#/definitions/condition-set-value"},
+                  "ForAllValues:NumericNotEquals": {"$ref": "#/definitions/condition-set-value"},
+                  "ForAllValues:NumericLessThan": {"$ref": "#/definitions/condition-set-value"},
+                  "ForAllValues:NumericLessThanEquals": {"$ref": "#/definitions/condition-set-value"},
+                  "ForAllValues:NumericGreaterThan": {"$ref": "#/definitions/condition-set-value"},
+                  "ForAllValues:NumericGreaterThanEquals": {"$ref": "#/definitions/condition-set-value"},
+                  "ForAllValues:DateEquals": {"$ref": "#/definitions/condition-set-value"},
+                  "ForAllValues:DateNotEquals": {"$ref": "#/definitions/condition-set-value"},
+                  "ForAllValues:DateLessThan": {"$ref": "#/definitions/condition-set-value"},
+                  "ForAllValues:DateLessThanEquals": {"$ref": "#/definitions/condition-set-value"},
+                  "ForAllValues:DateGreaterThan": {"$ref": "#/definitions/condition-set-value"},
+                  "ForAllValues:DateGreaterThanEquals": {"$ref": "#/definitions/condition-set-value"},
+                  "ForAllValues:Bool": {"$ref": "#/definitions/condition-set-value"},
+                  "ForAnyValue:StringEquals": {"$ref": "#/definitions/condition-set-value"},
+                  "ForAnyValue:StringNotEquals": {"$ref": "#/definitions/condition-set-value"},
+                  "ForAnyValue:StringLike": {"$ref": "#/definitions/condition-set-value"},
+                  "ForAnyValue:StringNotLike": {"$ref": "#/definitions/condition-set-value"},
+                  "ForAnyValue:NumericEquals": {"$ref": "#/definitions/condition-set-value"},
+                  "ForAnyValue:NumericNotEquals": {"$ref": "#/definitions/condition-set-value"},
+                  "ForAnyValue:NumericLessThan": {"$ref": "#/definitions/condition-set-value"},
+                  "ForAnyValue:NumericLessThanEquals": {"$ref": "#/definitions/condition-set-value"},
+                  "ForAnyValue:NumericGreaterThan": {"$ref": "#/definitions/condition-set-value"},
+                  "ForAnyValue:NumericGreaterThanEquals": {"$ref": "#/definitions/condition-set-value"},
+                  "ForAnyValue:DateEquals": {"$ref": "#/definitions/condition-set-value"},
+                  "ForAnyValue:DateNotEquals": {"$ref": "#/definitions/condition-set-value"},
+                  "ForAnyValue:DateLessThan": {"$ref": "#/definitions/condition-set-value"},
+                  "ForAnyValue:DateLessThanEquals": {"$ref": "#/definitions/condition-set-value"},
+                  "ForAnyValue:DateGreaterThan": {"$ref": "#/definitions/condition-set-value"},
+                  "ForAnyValue:DateGreaterThanEquals": {"$ref": "#/definitions/condition-set-value"},
+                  "ForAnyValue:Bool": {"$ref": "#/definitions/condition-set-value"}
+                },
+                "additionalProperties": false
               }
             }
           }
         }
       }
     }
+  },
+  "definitions": {
+    "condition-value": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "number"
+          }
+        ]
+      }
+    },
+    "condition-set-value": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
   }
 }
+
 ```
 
 ## Features
